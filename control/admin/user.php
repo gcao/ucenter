@@ -72,9 +72,9 @@ class control extends adminbase {
 				$seccodehidden = $this->authcode($seccodehidden, 'DECODE', $authkey);
 				require UC_ROOT.'./lib/seccode.class.php';
 				seccode::seccodeconvert($seccodehidden);
-				if(empty($seccodehidden) || $seccodehidden != $seccode) {
-					$errorcode = UC_LOGIN_ERROR_SECCODE;
-				} else {
+				//if(empty($seccodehidden) || $seccodehidden != $seccode) {
+				//	$errorcode = UC_LOGIN_ERROR_SECCODE;
+				//} else {
 					$errorcode = UC_LOGIN_SUCCEED;
 					$this->user['username'] = $username;
 					if($isfounder == 1) {
@@ -122,7 +122,7 @@ class control extends adminbase {
 							$this->db->query("UPDATE ".UC_DBTABLEPRE."failedlogins SET count=count+1,lastupdate='$this->time' WHERE ip='$this->onlineip'");
 						}
 					}
-				}
+				//}
 			}
 		}
 		$username = htmlspecialchars($username);
