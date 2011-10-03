@@ -4,12 +4,7 @@ set :deploy_to, "/data/apps/#{application}"
 set :scm, :git
 set :repository, "git://github.com/gcao/#{application}.git"
 
-if ENV['STAGING']
-  set :user, "vagrant"
-  set :use_sudo, true
-
-  server 'vagrant', :app, :web, :db, :primary => true
-else
+if ENV['DEPLOYMENT_TARGET'] == 'production'
   set :user, "root"
   set :use_sudo, false
   
@@ -18,6 +13,11 @@ else
   
   # AMI ami-0d729464: ubuntu 9.04 server base 
   server ami_host, :app, :web, :db, :primary => true
+else
+  set :user, "vagrant"
+  set :use_sudo, true
+
+  server 'vagrant', :app, :web, :db, :primary => true
 end
 
 namespace :deploy do
