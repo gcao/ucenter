@@ -1,8 +1,12 @@
+load 'deploy' if respond_to?(:namespace) # cap2 differentiator
+
 set :application, "ucenter"
 set :deploy_to, "/data/apps/#{application}"
  
 set :scm, :git
 set :repository, "git://github.com/gcao/#{application}.git"
+
+set :normalize_asset_timestamps, false
 
 if ENV['DEPLOYMENT_TARGET'] == 'production'
   set :user, "root"
@@ -35,6 +39,6 @@ end
 after "deploy:update_code", :copy_over_config_files
 
 task :copy_over_config_files do
-  run "cp -rf #{deploy_to}/#{shared_dir}/config/* #{release_path}/config/"
+  run "cp -rf #{deploy_to}/#{shared_dir}/config/* #{release_path}/"
 end
 
